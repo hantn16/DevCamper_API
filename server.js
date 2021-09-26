@@ -17,6 +17,8 @@ const PORT = process.env.PORT || 5000;
 
 // Dev logging middleware
 app.use(morgan('dev'));
+// Body parser
+app.use(express.json());
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
