@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "SET NODE_ENV=production& node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon -r dotenv/config server.js",
+    "imp": "node -r dotenv/config seeder.js -i",
+    "del": "node -r dotenv/config seeder.js -d"
   },
   "author": "Han Trinh",
   "license": "MIT",
