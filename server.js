@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const colors = require('colors');
 const logger = require('./middleware/logger');
 const connectDb = require('./config/db');
+const errorHandler = require('./middleware/error');
 
 //load env vars
 dotenv.config({ path: './config/config.env' });
@@ -22,6 +23,8 @@ app.use(express.json());
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+
+app.use(errorHandler);
 
 const server = app.listen(PORT, () => {
   console.log(
