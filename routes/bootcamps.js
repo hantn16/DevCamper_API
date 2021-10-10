@@ -1,4 +1,5 @@
 const express = require('express');
+const advancedResults = require('../middleware/advancedResults');
 const {
   getBootcamps,
   getBootcamp,
@@ -8,6 +9,7 @@ const {
   getBootcampsInRadius,
   uploadBootcampPhoto,
 } = require('../controllers/bootcamps');
+const Bootcamp = require('../models/Bootcamp');
 
 const router = express.Router();
 
@@ -18,7 +20,10 @@ const courseRouter = require('./courses');
 router.use('/:bootcampId/courses', courseRouter);
 
 router.route('/radius/:zipcode/:distance').get(getBootcampsInRadius);
-router.route('/').get(getBootcamps).post(createBootcamp);
+router
+  .route('/')
+  .get(advancedResults(Bootcamp, 'courses'), getBootcamps)
+  .post(createBootcamp);
 router
   .route('/:id')
   .get(getBootcamp)

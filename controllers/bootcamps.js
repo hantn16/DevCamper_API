@@ -8,65 +8,7 @@ const path = require('path');
 // @route   GET /api/v1/bootcamps
 // @access  Public
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
-  let query;
-  // Copy req.query
-  const reqQuery = { ...req.query };
-  // Remove keyword such as 'select', 'sort',etc from reqQuery
-  const removeFields = ['select', 'sort', 'page', 'limit'];
-  removeFields.forEach((param) => delete reqQuery[param]);
-
-  const queryString = JSON.stringify(reqQuery);
-  const replaceString = queryString.replace(
-    /\b(gt|gte|lt|lte|in)\b/g,
-    (match) => `$${match}`
-  );
-  query = Bootcamp.find(JSON.parse(replaceString)).populate('courses');
-
-  // Select fields
-  // https://mongoosejs.com/docs/api/query.html#query_Query-select
-  if (req.query.select) {
-    const selectString = req.query.select.split(',').join(' ');
-    query = query.select(selectString);
-  }
-
-  // Sort by field
-  // https://mongoosejs.com/docs/api/query.html#query_Query-sort
-  if (req.query.sort) {
-    const sortString = req.query.sort.split(',').join(' ');
-    query = query.sort(sortString);
-  } else {
-    query = query.sort('-createdAt');
-  }
-
-  // Pagination
-  // https://mongoosejs.com/docs/api/query.html#query_Query-skip
-  const page = parseInt(req.query.page, 10) || 1;
-  const limit = parseInt(req.query.limit, 10) || 25;
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
-  const total = await Bootcamp.countDocuments();
-  query = query.skip(startIndex).limit(limit);
-
-  const bootcamps = await query;
-  const pagination = {};
-  if (endIndex < total) {
-    pagination.next = {
-      page: page + 1,
-      limit,
-    };
-  }
-  if (startIndex > 0) {
-    pagination.prev = {
-      page: page - 1,
-      limit,
-    };
-  }
-  res.status(200).json({
-    success: true,
-    count: bootcamps.length,
-    pagination,
-    data: bootcamps,
-  });
+  res.status(200).json(res.advancedResults);
 });
 
 // @desc    Get a bootcamp
