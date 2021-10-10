@@ -1,4 +1,5 @@
 const express = require('express');
+var cookieParser = require('cookie-parser');
 const path = require('path');
 const morgan = require('morgan');
 const colors = require('colors');
@@ -10,6 +11,7 @@ const errorHandler = require('./middleware/error');
 // Load routes
 const bootcamps = require('./routes/bootcamps');
 const courses = require('./routes/courses');
+const auth = require('./routes/auth');
 
 // Connect database
 connectDb();
@@ -21,6 +23,8 @@ const PORT = process.env.PORT || 5000;
 app.use(morgan('dev'));
 // Body parser
 app.use(express.json());
+// Cookie parser
+app.use(cookieParser());
 
 // Statics Folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -31,6 +35,7 @@ app.use(expressFileUpload());
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
+app.use('/api/v1/auth', auth);
 
 app.use(errorHandler);
 
