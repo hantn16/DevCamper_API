@@ -1,10 +1,13 @@
 const express = require('express');
-const bootcamps = require('./routes/bootcamps');
 const morgan = require('morgan');
 const colors = require('colors');
 const logger = require('./middleware/logger');
 const connectDb = require('./config/db');
 const errorHandler = require('./middleware/error');
+
+// Load routes
+const bootcamps = require('./routes/bootcamps');
+const courses = require('./routes/courses');
 
 // Connect database
 connectDb();
@@ -19,6 +22,7 @@ app.use(express.json());
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/courses', courses);
 
 app.use(errorHandler);
 

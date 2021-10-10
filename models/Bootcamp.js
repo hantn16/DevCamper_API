@@ -98,6 +98,16 @@ const bootcampSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+},{
+  toJSON: {virtuals: true},
+  toObject: {virtuals: true}
+});
+
+bootcampSchema.virtual('courses',{
+  ref: 'Course',
+  localField: '_id',
+  foreignField: 'bootcamp',
+  justOne: false
 });
 
 bootcampSchema.pre('save', function (next) {
@@ -131,4 +141,8 @@ bootcampSchema.pre('save', async function (next) {
   this.address = undefined;
   next();
 });
+bootcampSchema.pre('remove',async function (next) {
+  await this.model('Course').deleteMany({bootcamp: this._id});
+  next();
+})
 module.exports = mongoose.model('Bootcamp', bootcampSchema);
