@@ -1,6 +1,8 @@
 const express = require('express');
+const path = require('path');
 const morgan = require('morgan');
 const colors = require('colors');
+const expressFileUpload = require('express-fileupload');
 const logger = require('./middleware/logger');
 const connectDb = require('./config/db');
 const errorHandler = require('./middleware/error');
@@ -19,6 +21,12 @@ const PORT = process.env.PORT || 5000;
 app.use(morgan('dev'));
 // Body parser
 app.use(express.json());
+
+// Statics Folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Express file upload
+app.use(expressFileUpload());
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);

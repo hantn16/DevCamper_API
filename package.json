@@ -15,9 +15,11 @@
     "colors": "^1.4.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "mongoose": "^6.0.7",
     "morgan": "^1.10.0",
     "node-geocoder": "^3.27.0",
+    "path": "^0.12.7",
     "slugify": "^1.6.0"
   },
   "devDependencies": {
