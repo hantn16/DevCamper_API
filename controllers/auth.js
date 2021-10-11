@@ -1,5 +1,6 @@
 const asyncHandler = require('../middleware/asyncHandler');
 const User = require('../models/User');
+const advancedResults = require('../middleware/advancedResults');
 const ErrorResponse = require('../utils/errorResponse');
 
 // @desc    Register an user
@@ -61,7 +62,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 };
 
 // @desc    Get user logged in
-// @route   POST /api/v1/auth/me
+// @route   GET /api/v1/auth/me
 // @access  Private
 exports.getMe = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
@@ -69,4 +70,10 @@ exports.getMe = asyncHandler(async (req, res, next) => {
     success: true,
     data: user,
   });
+});
+// @desc    Get all users
+// @route   GET /api/v1/auth
+// @access  Public
+exports.getUsers = asyncHandler(async (req, res, next) => {
+  res.status(200).json(res.advancedResults);
 });
