@@ -177,10 +177,3 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
   sendTokenResponse(user, 200, res);
 });
-
-// @desc    Get all users
-// @route   GET /api/v1/auth
-// @access  Public
-exports.getUsers = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
-});
