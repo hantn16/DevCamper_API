@@ -33,6 +33,11 @@ const courseSchema = new Schema({
     ref: 'Bootcamp',
     required: true,
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

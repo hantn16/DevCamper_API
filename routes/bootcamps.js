@@ -23,7 +23,13 @@ router.use('/:bootcampId/courses', courseRouter);
 router.route('/radius/:zipcode/:distance').get(getBootcampsInRadius);
 router
   .route('/')
-  .get(advancedResults(Bootcamp, 'courses'), getBootcamps)
+  .get(
+    advancedResults(Bootcamp, 'courses', {
+      path: 'user',
+      select: 'name email',
+    }),
+    getBootcamps
+  )
   .post(protect, authorize('admin', 'publisher'), createBootcamp);
 router
   .route('/:id')
