@@ -66,8 +66,13 @@ courseSchema.statics.getAverageCost = async function (bootcampId) {
 courseSchema.post('save', function () {
   this.constructor.getAverageCost(this.bootcamp);
 });
-// Call getAverageCost before remove
-courseSchema.pre('remove', function () {
+// Call getAverageRating after findOneAndUpdate
+courseSchema.post('findOneAndUpdate', async function () {
+  const course = await this.model.findOne(this.getQuery());
+  this.model.getAverageRating(course.bootcamp);
+});
+// Call getAverageCost after remove
+courseSchema.post('remove', function () {
   this.constructor.getAverageCost(this.bootcamp);
 });
 

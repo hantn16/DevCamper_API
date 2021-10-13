@@ -77,10 +77,7 @@ exports.createCourse = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/v1/courses/:id
 // @access  Private
 exports.updateCourse = asyncHandler(async (req, res, next) => {
-  const course = await Course.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  let course = await Course.findById(req.params.id);
   // Check if course exists
   if (!course) {
     return next(
@@ -97,7 +94,10 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
       )
     );
   }
-
+  course = await Course.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
   res.status(200).json({
     success: true,
     data: course,

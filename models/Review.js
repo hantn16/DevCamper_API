@@ -56,22 +56,18 @@ reviewSchema.statics.getAverageRating = async function (bootcampId) {
 };
 
 // Call getAverageRating after save
-reviewSchema.post('save', function () {
+reviewSchema.post('save', { document: true, query: false }, function () {
   this.constructor.getAverageRating(this.bootcamp);
 });
+
 // Call getAverageRating after findOneAndUpdate
 reviewSchema.post('findOneAndUpdate', async function () {
   const doc = await this.model.findOne(this.getQuery());
   this.model.getAverageRating(doc.bootcamp);
 });
-// Call getAverageRating before findOneAndDelete
-reviewSchema.pre('findOneAndDelete', async function () {
-  const doc = await this.model.findOne(this.getQuery());
-  console.log('chay vao day');
-  this.model.getAverageRating(doc.bootcamp);
-});
-// Call getAverageRating before remove
-reviewSchema.pre('remove', function () {
+
+// Call getAverageRating after remove
+reviewSchema.post('remove', { document: true, query: false }, function () {
   this.constructor.getAverageRating(this.bootcamp);
 });
 

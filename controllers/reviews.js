@@ -82,10 +82,12 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  review = await Review.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  review = Object.assign(review, req.body);
+  await review.save();
+  // review = await Review.findByIdAndUpdate(req.params.id, req.body, {
+  //   new: true,
+  //   runValidators: true,
+  // });
   res.status(200).json({
     success: true,
     data: review,
@@ -113,7 +115,7 @@ exports.deleteReview = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  await Review.findByIdAndDelete(req.params.id);
+  await review.remove();
   res.status(200).json({
     success: true,
     data: {},
