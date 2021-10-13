@@ -7,7 +7,7 @@ const errorHandler = (err, req, res, next) => {
   console.log(err);
   // Mongoose bad ObjectId
   if (err.name === 'CastError') {
-    const message = `Resources not found with id of ${err.value}`;
+    const message = `Resources not found`;
     error = new ErrorResponse(message, 404);
   }
   // Mongoose duplicate key
