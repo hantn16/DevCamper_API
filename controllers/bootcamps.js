@@ -21,7 +21,7 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
     );
   }
-  res.status(200).json({ success: true, data: bootcamp });
+  res.status(200).json({ status: 'success', data: bootcamp });
 });
 
 // @desc    Create a bootcamp
@@ -39,7 +39,7 @@ exports.createBootcamp = asyncHandler(async (req, res, next) => {
   }
   req.body.user = req.user.id;
   bootcamp = await Bootcamp.create(req.body);
-  res.status(201).json({ success: true, data: bootcamp });
+  res.status(201).json({ status: 'success', data: bootcamp });
 });
 
 // @desc    Update a bootcamp
@@ -72,7 +72,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
       runValidators: true,
     }
   );
-  res.status(200).json({ success: true, data: updatedBootcamp });
+  res.status(200).json({ status: 'success', data: updatedBootcamp });
 });
 
 // @desc    Delete a bootcamp
@@ -98,7 +98,7 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
     );
   }
   await bootcamp.remove();
-  res.status(200).json({ success: true, data: {} });
+  res.status(200).json({ status: 'success', data: {} });
 });
 
 // @desc    Upload a photo bootcamp
@@ -152,7 +152,7 @@ exports.uploadBootcampPhoto = asyncHandler(async (req, res, next) => {
       return next(new ErrorResponse('Server Error with file upload', 500));
     }
     await Bootcamp.findByIdAndUpdate(req.params.id, { photo: file.name });
-    res.status(200).json({ success: true, data: file.name });
+    res.status(200).json({ status: 'success', data: file.name });
   });
 });
 
@@ -175,7 +175,7 @@ exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
     },
   });
   res.status(200).json({
-    success: true,
+    status: 'success',
     count: bootcamps.length,
     data: bootcamps,
   });

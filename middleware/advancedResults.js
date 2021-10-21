@@ -62,7 +62,7 @@ const advancedResults =
       };
     }
     res.advancedResults = {
-      success: true,
+      status: 'success',
       count: results.length,
       pagination,
       data: results,

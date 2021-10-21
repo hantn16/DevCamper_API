@@ -40,7 +40,6 @@ exports.login = asyncHandler(async (req, res, next) => {
   if (!isMatch) {
     return next(new ErrorResponse('Invalid Credentials', 401));
   }
-
   sendTokenResponse(user, 200, res);
 });
 
@@ -60,7 +59,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   res
     .status(statusCode)
     .cookie('token', token, option)
-    .json({ success: true, token });
+    .json({ status: 'success', token });
 };
 
 // @desc    Get user logged in
@@ -69,7 +68,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 exports.getMe = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   res.status(200).json({
-    success: true,
+    status: 'success',
     data: user,
   });
 });
@@ -87,7 +86,7 @@ exports.updateUserDetails = asyncHandler(async (req, res, next) => {
     runValidators: true,
   });
   res.status(200).json({
-    success: true,
+    status: 'success',
     data: user,
   });
 });
@@ -136,7 +135,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
       text: message,
     });
     res.status(200).json({
-      success: true,
+      status: 'success',
       data: 'Email sent',
     });
   } catch (err) {
@@ -148,7 +147,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({
-    success: true,
+    status: 'success',
     data: user,
   });
 });

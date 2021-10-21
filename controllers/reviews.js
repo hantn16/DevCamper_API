@@ -11,7 +11,7 @@ exports.getReviews = asyncHandler(async (req, res, next) => {
   if (req.params.bootcampId) {
     const reviews = await Review.find({ bootcamp: req.params.bootcampId });
     return res.status(200).json({
-      success: true,
+      status: 'success',
       count: reviews.length,
       data: reviews,
     });
@@ -34,7 +34,7 @@ exports.getReview = asyncHandler(async (req, res, next) => {
     );
   }
   res.status(200).json({
-    success: true,
+    status: 'success',
     data: review,
   });
 });
@@ -56,7 +56,7 @@ exports.createReview = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
   const review = await Review.create(req.body);
   res.status(201).json({
-    success: true,
+    status: 'success',
     data: review,
   });
 });
@@ -89,7 +89,7 @@ exports.updateReview = asyncHandler(async (req, res, next) => {
   //   runValidators: true,
   // });
   res.status(200).json({
-    success: true,
+    status: 'success',
     data: review,
   });
 });
@@ -117,7 +117,7 @@ exports.deleteReview = asyncHandler(async (req, res, next) => {
   }
   await review.remove();
   res.status(200).json({
-    success: true,
+    status: 'success',
     data: {},
   });
 });

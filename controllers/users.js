@@ -23,7 +23,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
     );
   }
   res.status(200).json({
-    success: true,
+    status: 'success',
     data: user,
   });
 });
@@ -33,7 +33,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 // @access  Private/Admin
 exports.createUser = asyncHandler(async (req, res, next) => {
   const user = await User.create(req.body);
-  res.status(201).json({ success: true, data: user });
+  res.status(201).json({ status: 'success', data: user });
 });
 
 // @desc    Update a user
@@ -51,7 +51,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
     );
   }
 
-  res.status(200).json({ success: true, data: user });
+  res.status(200).json({ status: 'success', data: user });
 });
 
 // @desc    Delete a user
@@ -66,5 +66,5 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
     );
   }
   await user.remove();
-  res.status(200).json({ success: true, data: {} });
+  res.status(200).json({ status: 'success', data: {} });
 });
